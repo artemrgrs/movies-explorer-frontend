@@ -1,0 +1,19 @@
+.movie__delete-btn {
+  background-image: url(../../../images/delete-icon.svg);
+  width: 30px;
+  height: 30px;
+  border: none;
+  outline: none;
+  border-radius: 50%;
+  grid-column-start: 2;
+  grid-column-end: 3;
+  grid-row-start: 1;
+  grid-row-end: 2;
+  cursor: pointer;
+  transition: .3s;
+  align-self: center;
+}
+
+.movie__delete-btn:hover {
+  opacity: .8;
+}

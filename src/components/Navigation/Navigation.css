@@ -1,0 +1,10 @@
+@import url(../../blocks/nav/nav.css);
+@import url(../../blocks/nav/_opened/nav_opened.css);
+@import url(../../blocks/nav/__list/nav__list.css);
+@import url(../../blocks/nav/__link/nav__link.css);
+@import url(../../blocks/nav/__element/nav__element.css);
+@import url(../../blocks/nav/__close-btn/nav__close-btn.css);
+@import url(../../blocks/nav/__account-icon/nav__account-icon.css);
+@import url(../../blocks/nav/__container/nav__container.css);
+@import url(../../blocks/nav/__overlay/nav__overlay.css);
+@import url(../../blocks/nav/__link/_active/nav__link_active.css);

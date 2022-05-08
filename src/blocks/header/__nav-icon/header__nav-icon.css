@@ -1,0 +1,28 @@
+.header__nav-icon {
+  background-image: url(../../../images/nav-icon.svg);
+  background-repeat: no-repeat;
+  width: 44px;
+  height: 44px;
+  transition: .3s;
+  cursor: pointer;
+  background-size: cover;
+  border: none;
+  outline: none;
+  background-color: #fafafa;
+}
+
+.header__nav-icon:hover {
+  opacity: .8;
+}
+
+@media screen and (min-width: 320px) and (max-width: 1024px) {
+  .header__nav-icon {
+    display: block;
+  }
+}
+
+@media screen and (min-width: 1025px) {
+  .header__nav-icon {
+    display: none;
+  }
+}

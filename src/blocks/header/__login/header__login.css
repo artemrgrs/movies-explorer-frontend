@@ -1,0 +1,39 @@
+.header__login {
+  display: block;
+  text-decoration: none;
+  border: none;
+  background-color: #2BE080;
+  color: #000;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: .3s;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 500;
+  text-align: center;
+  outline: none;
+}
+
+.header__login:hover {
+  opacity: .7;
+}
+
+@media screen and (min-width: 320px) and (max-width: 767px) {
+  .header__login {
+    width: 54px;
+    height: 26px;
+    margin-left: 14px;
+    font-size: 10px;
+    line-height: 26px;
+  }
+}
+
+@media screen and (min-width: 767px) {
+  .header__login {
+    width: 76px;
+    height: 32px;
+    margin-left: 30px;
+    font-size: 12px;
+    line-height: 32px;
+  }
+}

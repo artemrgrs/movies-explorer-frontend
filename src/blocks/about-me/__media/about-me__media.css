@@ -1,0 +1,14 @@
+.about-me__media {
+  grid-row-start: 3;
+  grid-row-end: 4;
+  grid-column-start: 1;
+  grid-column-end: 2;
+  align-self: end;
+}
+
+@media screen and (min-width: 320px) and (max-width: 767px) {
+  .about-me__media {
+    grid-row-start: 5;
+    grid-row-end: 6;
+  }
+}

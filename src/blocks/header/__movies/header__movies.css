@@ -1,0 +1,18 @@
+.header__movies {
+  font-family: Inter;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 13px;
+  line-height: 18px;
+  /* identical to box height, or 138% */
+  
+  text-align: right;
+  margin-right: 16px;
+  color: #000;
+  text-decoration: none;
+  transition: .3s;
+}
+
+.header__movies:hover {
+  opacity: .8;
+}

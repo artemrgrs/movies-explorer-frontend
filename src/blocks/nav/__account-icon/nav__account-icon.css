@@ -1,0 +1,17 @@
+.nav__account-icon {
+  position: fixed;
+  bottom: 90px;
+  right: 195px;
+  transition: .3s;
+}
+
+.nav__account-icon:hover {
+  opacity: .8;
+}
+
+@media screen and (min-width: 320px) and (max-width: 767px) {
+  .nav__account-icon {
+    bottom: 46px;
+    right: calc(50% - 60px);
+  }
+}

@@ -1,0 +1,14 @@
+.nav__container {
+  position: fixed;
+  width: 520px;
+  height: 100vh;
+  top: 0;
+  right: 0;
+  background-color: #fafafa;
+}
+
+@media screen and (min-width: 320px) and (max-width: 767px) {
+  .nav__container {
+    width: 100vw;
+  }
+}

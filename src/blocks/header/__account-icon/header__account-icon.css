@@ -1,0 +1,16 @@
+.header__account-icon {
+  width: 128px;
+  height: 60px;
+  cursor: pointer;
+  transition: .3s;
+}
+
+.header__account-icon:hover {
+  opacity: .8;
+}
+
+@media screen and (min-width: 320px) and (max-width: 1024px) {
+  .header__account-icon {
+    display: none;
+  }
+}
