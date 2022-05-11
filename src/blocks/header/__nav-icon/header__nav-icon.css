@@ -8,7 +8,7 @@
   background-size: cover;
   border: none;
   outline: none;
-  background-color: #fafafa;
+  background-color: transparent;
 }
 
 .header__nav-icon:hover {

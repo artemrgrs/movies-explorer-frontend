@@ -5,7 +5,7 @@ function Footer() {
   const year = new Date().getFullYear();
 
   return(
-    <div className="footer" style={{display: `${(window.location.pathname === '/')
+    <section className="footer" style={{display: `${(window.location.pathname === '/')
     ||(window.location.pathname === '/movies')
     ||(window.location.pathname === '/saved-movies') ? `block` : ``}`}}>
       <p className="footer__text">Учебный проект Яндекс.Практикум х BeatFilm.</p>
@@ -17,7 +17,7 @@ function Footer() {
           <a href="https://www.instagram.com" className="footer__link" target="_blank" rel="noreferrer">Instagram</a>
         </div>
       </div>
-    </div>
+    </section>
   )
 }
 

@@ -6,13 +6,13 @@ import AboutMe from "../AboutMe/AboutMe";
 import Portfolio from "../Portfolio/Portfolio";
 function Main() {
   return(
-    <div className="main">
-      <Promo></Promo>
-      <AboutProject></AboutProject>
-      <Techs></Techs>
-      <AboutMe></AboutMe>
-      <Portfolio></Portfolio>
-    </div>
+    <section className="main">
+      <Promo/>
+      <AboutProject/>
+      <Techs/>
+      <AboutMe/>
+      <Portfolio/>
+    </section>
   )
 }
 

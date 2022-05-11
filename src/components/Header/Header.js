@@ -6,7 +6,7 @@ import accountIcon from '../../images/profile.svg';
 
 function Header(props) {
   return(
-    <div className={`header ${window.location.pathname === '/' ? `header_landing` : ``}`}>
+    <section className={`header ${window.location.pathname === '/' ? `header_landing` : ``}`}>
       
       <Route exact path="/">
         <ul className="header__nav header__nav_landing" aria-labelledby="menu" aria-label="submenu">
@@ -24,9 +24,9 @@ function Header(props) {
       </Route>
 
       <Route path='/profile'>
-          <button type="button" className="header__nav-icon" onClick={props.changeNavState}/>
+          {/*<button type="button" className="header__nav-icon" onClick={props.changeNavState}/>*/}
           <div className="header__nav" aria-labelledby="menu" aria-label="submenu">
-            <img alt="Логотип сервиса" src={headerLogo} className="header__logo"/>
+            {/*<img alt="Логотип сервиса" src={headerLogo} className="header__logo"/>*/}
             <div className="header__nav-element">
               <Link to="/movies" className="header__movies">
                 Фильмы
@@ -48,13 +48,14 @@ function Header(props) {
       </Route>
 
       <Route path='/movies'>
+          <img alt="Логотип сервиса" src={headerLogo} className="header__logo"/>
           <button type="button" className="header__nav-icon" onClick={props.changeNavState}></button>
           <ul className="header__nav" aria-labelledby="menu" aria-label="submenu">
-            <li className="header__nav-element">
-              <Link to="/profile">
-              <img alt="Логотип сервиса" src={headerLogo} className="header__logo"/>
-              </Link>
-            </li>
+            {/*<li className="header__nav-element">*/}
+            {/*  <Link to="/profile">*/}
+            {/*  <img alt="Логотип сервиса" src={headerLogo} className="header__logo"/>*/}
+            {/*  </Link>*/}
+            {/*</li>*/}
             <li className="header__nav-element">
               <Link to="/movies" className="header__movies header__movies_active">
                 Фильмы
@@ -102,7 +103,7 @@ function Header(props) {
             </li>
           </ul>
       </Route>
-    </div>
+    </section>
   )
 }
 

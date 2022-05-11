@@ -21,17 +21,17 @@ function Profile(props) {
   }
 
   return(
-    <div className="profile">
+    <section className="profile">
       <h2 className="profile__title">Привет, Виталий!</h2>
-      <form className="profile-form" 
-        name="edit-profile" 
+      <form className="profile-form"
+        name="edit-profile"
         method="get"
         action="index.html"
         onSubmit={handleSubmit}
         noValidate>
           <label className="profile-form__field">
             <p className="profile-form__input-name">Имя</p>
-            <input className="profile-form__input" 
+            <input className="profile-form__input"
             value={name}
             name="edit-profile"
             placeholder="Виталий"
@@ -43,7 +43,7 @@ function Profile(props) {
           </label>
           <label className="profile-form__field">
             <p className="profile-form__input-name">Почта</p>
-            <input className="profile-form__input" 
+            <input className="profile-form__input"
             value={email}
             name="edit-profile"
             type="email"
@@ -53,13 +53,13 @@ function Profile(props) {
             id="profile-name-input"
             ></input>
           </label>
-          <button type="submit" 
+          <button type="submit"
           className={`profile-form__submit ${ props.formState ? `profile-form__submit_visible` : `` }`}>Сохранить</button>
       </form>
       <button type="button" className={`profile__edit ${ props.formState ? `profile__edit_hidden` : `` }`} onClick={props.changeFormState}>Редактировать</button>
-      <Link to="/signin" 
+      <Link to="/signin"
       className={`profile__logout ${ props.formState ? `profile__logout_hidden` : `` }`}>Выйти из аккаунта</Link>
-    </div>
+    </section>
   )
 }
 

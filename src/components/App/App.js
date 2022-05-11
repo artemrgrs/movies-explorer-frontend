@@ -25,7 +25,7 @@ function App() {
   }
 
   return (
-      <div className="page">
+      <section className="page">
 
         <Switch>
           <Route exact path="/">
@@ -66,7 +66,7 @@ function App() {
         </Switch>
 
         <Navigation isOpen={isNavOpen} changeState={changeNavState}></Navigation>
-      </div>
+      </section>
   );
 }
 
