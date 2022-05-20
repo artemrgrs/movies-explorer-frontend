@@ -1,0 +1,19 @@
+.portfolio__header {
+  font-family: Inter;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 20px;
+  margin: 0 0 30px;  
+  
+  color: #A0A0A0;
+  
+  mix-blend-mode: normal;
+}
+
+@media screen and (min-width: 320px) and (max-width: 767px) {
+  .portfolio__header {
+    font-size: 14px;
+    margin: 0 0 40px;
+  }
+}

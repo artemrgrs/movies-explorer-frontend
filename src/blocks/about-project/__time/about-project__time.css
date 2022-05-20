@@ -1,0 +1,24 @@
+.about-project__time {
+  display: grid;
+  grid-template-rows: 36px 17px;
+  row-gap: 14px;
+}
+
+@media screen and (min-width: 320px) and (max-width: 767px) {
+  .about-project__time {
+    grid-template-columns: 100px calc(100% - 100px);
+    row-gap: 10px;
+  }
+}
+
+@media screen and (min-width: 767px) and (max-width: 1024px) {
+  .about-project__time {
+    grid-template-columns: 140px calc(100% - 140px);
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .about-project__time {
+    grid-template-columns: 228px calc(100% - 228px);
+  }
+}

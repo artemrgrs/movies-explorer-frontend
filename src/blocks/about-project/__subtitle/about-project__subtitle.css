@@ -1,0 +1,31 @@
+.about-project__subtitle {
+  font-family: Inter;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 20px;
+  margin: 0;
+}
+
+@media screen and (min-width: 320px) and (max-width: 768px) {
+  .about-project__subtitle {
+    margin-bottom: 56px;
+    font-size: 11px;
+    line-height: 16px;
+  }
+}
+
+@media screen and (min-width: 767px) and (max-width: 1024px) {
+  .about-project__subtitle {
+    font-size: 12px;
+    line-height: 18px;
+  }
+}
+
+
+@media screen and (min-width: 767px) {
+  .about-project__subtitle {
+    grid-row-start: 2;
+    grid-row-end: 3;
+  }
+}

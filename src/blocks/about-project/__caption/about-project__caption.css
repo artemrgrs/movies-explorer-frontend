@@ -1,0 +1,17 @@
+.about-project__caption {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 17px;
+  color: #A0A0A0;
+  margin: 0;
+  font-family: Inter;
+  text-align: center;
+}
+
+@media screen and (min-width: 320px) and (max-width: 767px) {
+  .about-project__caption {
+    font-size: 11px;
+    line-height: 13px;
+  }
+}

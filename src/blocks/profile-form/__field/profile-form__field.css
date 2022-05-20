@@ -1,0 +1,9 @@
+.profile-form__field {
+  display: flex;
+  justify-content: space-between;
+  padding: 17px 0;
+}
+
+.profile-form__field:first-of-type {
+  border-bottom: 1px solid #e8e8e8;
+}

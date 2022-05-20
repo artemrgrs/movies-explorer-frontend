@@ -1,0 +1,19 @@
+.movie__img {
+  width: 364px;
+  grid-row-start: 2;
+  grid-row-end: 3;
+  grid-column-start: 1;
+  grid-column-end: 3;
+}
+
+@media screen and (min-width: 767px) and (max-width: 1279px) {
+  .movie__img {
+    width: 339px;
+  }
+}
+
+@media screen and (min-width: 320px) and (max-width: 767px) {
+  .movie__img {
+    width: 300px;
+  }
+}

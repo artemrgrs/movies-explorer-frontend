@@ -1,0 +1,17 @@
+@media screen and (min-width: 320px) and (max-width: 767px) {
+  .about-project {
+    padding: 70px 18px;
+  }
+}
+
+@media screen and (min-width: 767px) and (max-width: 1024px) {
+  .about-project {
+    padding: 90px 50px;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .about-project {
+    padding: 110px 70px;
+  }
+}

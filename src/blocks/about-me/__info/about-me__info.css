@@ -1,0 +1,36 @@
+.about-me__info {
+  font-family: Inter;
+  font-style: normal;
+  font-weight: normal;
+  grid-row-start: 3;
+  grid-row-end: 4;
+  mix-blend-mode: normal;
+  grid-column-start: 1;
+  grid-column-end: 2;
+}
+
+@media screen and (min-width: 320px) and (max-width: 767px) {
+  .about-me__info {
+    font-size: 11px;
+    line-height: 16px;
+    grid-row-start: 4;
+    grid-row-end: 5;
+    margin-bottom: 20px;
+  }
+}
+
+@media screen and (min-width: 767px) and (max-width: 1024px) {
+  .about-me__info {
+    margin: 4px 0 0;
+    font-size: 12px;
+    line-height: 18px;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .about-me__info {
+    margin: 8px 0 0;
+    font-size: 14px;
+    line-height: 22px;
+  }
+}
