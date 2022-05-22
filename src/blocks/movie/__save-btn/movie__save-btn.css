@@ -11,7 +11,7 @@
   grid-row-end: 2;
   cursor: pointer;
   transition: .3s;
-  align-self: center;
+  /* align-self: center; */
 }
 
 .movie__save-btn:hover {

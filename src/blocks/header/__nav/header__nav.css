@@ -6,7 +6,7 @@
   margin: 0;
 }
 
-@media screen and (min-width: 320px) and (max-width: 1024px) {
+@media screen and (min-width: 320px) and (max-width: 768px) {
   .header__nav {
     display: none;
     flex-direction: column;

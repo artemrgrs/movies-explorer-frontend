@@ -1,0 +1,9 @@
+.profile-form__submit_disabled {
+  background-color: #ebebeb;
+  color: #c2c2c2;
+  cursor: initial;
+}
+
+.profile-form__submit_disabled:hover {
+  opacity: 1;
+}

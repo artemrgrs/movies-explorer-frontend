@@ -1,2 +1,5 @@
 @import url(../../blocks/movies/movies.css);
 @import url(../../blocks/movies/__more-btn/movies__more-btn.css);
+@import url(../../blocks/movies/__more-btn/_hidden/movies__more-btn_hidden.css);
+@import url(../../blocks/movies/__warning/movies__warning.css);
+@import url(../../blocks/movies/__warning/_visible/movies__warning_visible.css);

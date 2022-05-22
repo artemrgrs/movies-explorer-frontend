@@ -12,3 +12,4 @@
 @import url(../../blocks/profile-form/__field/profile-form__field.css);
 @import url(../../blocks/profile-form/__submit/profile-form__submit.css);
 @import url(../../blocks/profile-form/__submit/_visible/profile-form__submit_visible.css);
+@import url(../../blocks/profile-form/__submit/_disabled/profile-form__submit_disabled.css);

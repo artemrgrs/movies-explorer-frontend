@@ -1,0 +1,15 @@
+.form__submit-error {
+  font-family: Inter;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 11px;
+  line-height: 13px;
+  display: block;
+  visibility: hidden;
+  min-height: 13px;
+  text-align: center;
+
+  margin: 179px auto 20px;
+  
+  color: #FF004C;
+}

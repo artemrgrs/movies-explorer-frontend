@@ -1,12 +1,15 @@
 import React from "react";
-import './Techs.css';
+import "./Techs.css";
 
 function Techs() {
-  return(
-    <section className="techs">
+  return (
+    <div className="techs">
       <h2 className="techs__header">Технологии</h2>
       <h3 className="techs__title">7 технологий</h3>
-      <p className="techs__subtitle">На курсе веб-разработки мы освоили технологии, которые применили в дипломном проекте.</p>
+      <p className="techs__subtitle">
+        На курсе веб-разработки мы освоили технологии, которые применили в
+        дипломном проекте.
+      </p>
       <div className="techs__elements">
         <div className="techs__element">HTML</div>
         <div className="techs__element">CSS</div>
@@ -16,8 +19,8 @@ function Techs() {
         <div className="techs__element">Express.js</div>
         <div className="techs__element">mongoDB</div>
       </div>
-    </section>
-  )
+    </div>
+  );
 }
 
 export default Techs;

@@ -4,9 +4,8 @@
   font-weight: normal;
   font-size: 10px;
   line-height: 12px;
-  display: block;
-  height: 12px;
-  visibility: hidden;
+  display: none;
+  min-height: 12px;
 
   margin: 6px 0;
   

@@ -1,18 +1,23 @@
 import React from "react";
-import { Link } from "react-router-dom";
-
 import "./PageNotFound.css";
+import { useRouteMatch } from "react-router-dom";
 
-function PageNotFound() {
-  return(
+function PageNotFound(props) {
+  const { path, url } = useRouteMatch();
+
+  function goBack() {
+    props.history.goBack();
+  }
+
+  return (
     <div className="not-found">
       <h2 className="not-found__code">404</h2>
       <p className="not-found__caption">Страница не найдена</p>
-      <Link to="/" className="not-found__link">
+      <p className="not-found__link" onClick={goBack}>
         Назад
-      </Link>
+      </p>
     </div>
-  )
+  );
 }
 
 export default PageNotFound;
