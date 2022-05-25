@@ -62,6 +62,7 @@ function Register(props) {
             id="email"
             className="form__input form__input-email"
             required
+            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
             disabled={props.isFormDisabled}
           ></input>
           <span

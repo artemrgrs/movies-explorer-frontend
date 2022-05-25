@@ -1,5 +1,5 @@
 import React from "react";
-import { Redirect, Route, Switch, useHistory, useParams } from "react-router-dom";
+import { Redirect, Route, Switch, useHistory, useLocation, useParams } from "react-router-dom";
 import Header from "../Header/Header";
 import Main from "../Main/Main";
 import Movies from "../Movies/Movies";
@@ -21,32 +21,42 @@ import {
   DesktopMoviesNumber,
   MobileMoviesNumber
 } from '../../utils/constants';
+import Preloader from "../Preloader/Preloader";
 
 function App() {
   const history = useHistory();
-
+  const location = useLocation()
+  const [checking,setChecking] = React.useState(false)
   const [loggedIn, setLoggedIn] = React.useState(false);
 
   const [currentUser, setCurrentUser] = React.useState({
     name: "",
     email: "",
   });
+  
 
   const [error, setError] = React.useState("");
   const [isErrorVisible, setIsErrorVisible] = React.useState(false);
-
+  
   function tokenCheck() {
     if (localStorage.getItem("jwt")) {
       const jwt = localStorage.getItem("jwt");
       mainApi
         .checkToken(jwt)
         .then((res) => {
+          setIsLoading(true);
           setCurrentUser(res);
           setLoggedIn(true);
+          if (location.pathname === "/signup" || location.pathname === "/signin") {
+            history.push("/movies");
+          } else {
+            history.push(location.pathname);
+          }
+          setIsLoading(false);
         })
         .catch((err) => {
           return err;
-        });
+        })
     }
   }
 
@@ -94,7 +104,6 @@ function App() {
           setError("При регистрации пользователя произошла ошибка.");
           setIsErrorVisible(true);
         }
-        return res;
       })
       .catch((err) => {
         return err;
@@ -124,6 +133,8 @@ function App() {
   function handleLogOut() {
     setLoggedIn(false);
     localStorage.removeItem('movies');
+    localStorage.removeItem('saved-movies');
+    localStorage.removeItem('search-query');
     history.push("/");
   }
 
@@ -271,10 +282,10 @@ function App() {
           loggedIn={loggedIn}
           history={history}
         />
-        <Switch>
-          <Route exact path="/">
-            {loggedIn ? <Redirect to="movies" /> : <Main/>}
+        <Switch><Route exact path="/">
+            { loggedIn ? <Redirect to="/movies"/> : <Main/> }
           </Route>
+  
 
           <ProtectedRoute
             path="/profile"
@@ -339,7 +350,7 @@ function App() {
 
           <Route path="/signin">
             {loggedIn ? (
-              <Redirect to="movies" />
+              <Redirect to="/movies" />
             ) : (
               <Login
                 history={history}
@@ -355,7 +366,7 @@ function App() {
 
           <Route path="/signup">
             {loggedIn ? (
-              <Redirect to="movies" />
+              <Redirect to="/movies" />
             ) : (
               <Register
                 history={history}

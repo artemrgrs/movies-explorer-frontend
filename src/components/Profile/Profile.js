@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import validator from "../Validator/Validator";
+import IsEqual from "lodash/isEqual";
 
 import "./Profile.css";
 
@@ -33,7 +34,10 @@ function Profile(props) {
     props.onLogOut();
     localStorage.removeItem("jwt");
   }
-
+  
+  
+  
+  
   return (
     <div className="profile">
       <h2 className="profile__title">{`Привет, ${currentUser.name}`}</h2>
@@ -56,7 +60,7 @@ function Profile(props) {
             minLength="2"
             id="profile-name-input"
             disabled={!isFormStateActive || props.isFormDisabled}
-          ></input>
+          />
         </label>
         <span
           className={`form__input-error ${
@@ -76,8 +80,9 @@ function Profile(props) {
             onChange={handleChange}
             minLength="2"
             id="profile-name-input"
+            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
             disabled={!isFormStateActive || props.isFormDisabled}
-          ></input>
+          />
         </label>
         <span
           className={`form__input-error ${

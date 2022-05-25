@@ -6,13 +6,15 @@ function MoviesCardList(props) {
   React.useEffect(() => {
     props.getSavedMovies();
   }, []);
+  
+  const isSavedMoviesInStorage = localStorage.getItem('saved-movies')
 
   
   return (
     <div className="movies__container">
       {props.checkboxState
         ? props.movies.length !== 0 &&
-          props.movies.map((movie, i) => {
+          props.movies && isSavedMoviesInStorage.map((movie, i) => {
             if (
               movie.image &&
               (movie.trailerLink || movie.trailer) &&

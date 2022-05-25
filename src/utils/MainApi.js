@@ -116,7 +116,10 @@ class Api {
       }),
     })
       .then((res) => {
-        return res.json();
+        console.log(res)
+        if(res.ok) {
+          return res.json()
+        }
       })
       .then((data) => {
         if (data.token) {
@@ -139,7 +142,9 @@ class Api {
       }),
     })
       .then((res) => {
-        return res.json();
+        if(res.ok){
+          return res.json();
+        }
       })
       .then((data) => {
         if (data.token) {

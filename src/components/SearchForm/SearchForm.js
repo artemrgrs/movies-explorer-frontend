@@ -5,6 +5,7 @@ import "./SearchForm.css";
 
 function SearchForm(props) {
   const movieRef = React.useRef('');
+  console.log(props)
 
   const [isValid, setIsValid] = React.useState(true);
 
@@ -25,8 +26,7 @@ function SearchForm(props) {
       if (props.checkboxState) {
         movies = props.movies.filter(
           (movie) =>
-            movie.nameRU.toLowerCase().indexOf(movieRef.current.value.toLowerCase()) !== -1 &&
-            movie.duration <= 40
+            movie.nameRU.toLowerCase().indexOf(movieRef.current.value.toLowerCase()) !== -1 && movie.duration <= 40
         );
       } else {
         movies = props.movies.filter(
@@ -35,7 +35,10 @@ function SearchForm(props) {
         );
       }
 
-      localStorage.setItem('movies', JSON.stringify(movies));
+      localStorage.setItem('saved-movies', JSON.stringify(movies));
+      localStorage.setItem('search-query',movieRef.current.value)
+      
+      
 
       props.setMovies(movies);
       if (movies.length === 0) {
@@ -63,7 +66,7 @@ function SearchForm(props) {
             id="movie"
             className="search-form__input search-form__input-movie"
             required
-          ></input>
+          />
           <span
             className={`form__input-error ${
               !isValid ? `form__input-error_active` : ``

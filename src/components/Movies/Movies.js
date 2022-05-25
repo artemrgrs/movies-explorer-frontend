@@ -13,7 +13,7 @@ function Movies(props) {
     props.getMovies();
   }, []);
 
-  const actualMovies = JSON.parse(localStorage.getItem('movies'));
+  const actualMovies = JSON.parse(localStorage.getItem('saved-movies'));
 
   const [searchedMovies, setSearchedMovies] = React.useState(actualMovies ? actualMovies : []);
 
@@ -42,7 +42,7 @@ function Movies(props) {
         setErr={setIsNotFoundErrVisible}
         setServerErr={props.setServerErr}
         handleCheckboxState={props.handleCheckboxState}
-      ></SearchForm>
+      />
 
       {props.isLoading ? (
         <Preloader></Preloader>
@@ -73,7 +73,7 @@ function Movies(props) {
             checkboxState={props.checkboxState}
             changeMovieState={(movie) => props.changeMovieState(movie)}
             ShortMovieDuration={props.ShortMovieDuration}
-          ></MoviesCardList>
+          />
         </>
       )}
       <button
