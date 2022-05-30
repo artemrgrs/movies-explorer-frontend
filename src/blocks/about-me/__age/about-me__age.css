@@ -1,0 +1,34 @@
+.about-me__age {
+  grid-row-start: 2;
+  grid-row-end: 3;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 500;
+  mix-blend-mode: normal;
+  margin: 0;
+  grid-column-start: 1;
+  grid-column-end: 2;
+}
+
+@media screen and (min-width: 320px) and (max-width: 767px) {
+  .about-me__age {
+    font-size: 11px;
+    line-height: 16px;
+    grid-row-start: 3;
+    grid-row-end: 4;
+  }
+}
+
+@media screen and (min-width: 767px) and (max-width: 1024px) {
+  .about-me__age {
+    font-size: 12px;
+    line-height: 18px;
+  }
+}
+
+@media screen and (min-width: 1024px){
+  .about-me__age {
+    font-size: 18px;
+    line-height: 20px;
+  }
+}

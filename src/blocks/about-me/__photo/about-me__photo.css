@@ -1,0 +1,21 @@
+.about-me__photo {
+  width: 100%;
+  border-radius: 10px;
+}
+
+@media screen and (min-width: 320px) and (max-width: 767px) {
+  .about-me__photo {
+    grid-row-start: 1;
+    grid-row-end: 2;
+    margin-bottom: 20px;
+  }
+}
+
+@media screen and (min-width: 767px) {
+  .about-me__age {
+    grid-column-start: 2;
+    grid-column-end: 3;
+    grid-row-start: 1;
+    grid-row-end: 3;
+  }
+}

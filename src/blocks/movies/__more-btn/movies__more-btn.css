@@ -1,0 +1,28 @@
+.movies__more-btn {
+  margin: 50px auto 80px;
+  width: 320px;
+  height: 36px;
+  background-color: #fafafa;
+  border: #e8e8e8 solid 1px;
+  outline: none;
+  border-radius: 6px;
+
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 15px;
+  text-align: center;
+  cursor: pointer;
+  transition: .3s;
+}
+
+.movies__more-btn:hover {
+  opacity: .8px;
+}
+
+@media screen and (min-width: 320px) and (max-width: 767px) {
+  .movies__more-btn {
+    width: 240px;
+  }
+}

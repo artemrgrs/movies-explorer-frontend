@@ -1,0 +1,5 @@
+.nav__element {
+  margin: 0 auto 22px;
+  display: flex;
+  justify-content: center;
+}

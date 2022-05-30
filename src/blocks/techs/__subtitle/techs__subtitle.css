@@ -1,0 +1,32 @@
+.techs__subtitle {
+  font-family: Inter;
+  font-style: normal;
+  font-weight: normal;
+  max-width: 460px;  
+  text-align: center;
+  letter-spacing: -0.04em;
+}
+
+@media screen and (min-width: 320px) and (max-width: 767px) {
+  .techs__subtitle {
+    margin: 0 auto 50px;
+    font-size: 11px;
+    line-height: 16px;
+  }
+}
+
+@media screen and (min-width: 767px) and (max-width: 1024px) {
+  .techs__subtitle {
+    margin: 0 auto 83px;
+    font-size: 12px;
+    line-height: 18px;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .techs__subtitle {
+    font-size: 14px;
+    line-height: 20px;
+    margin: 0 auto 100px;
+  }
+}

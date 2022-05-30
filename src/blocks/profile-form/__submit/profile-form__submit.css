@@ -1,0 +1,33 @@
+.profile-form__submit {
+  margin: 220px 0 50px;
+  width: 100%;
+  border: none;
+  border-radius: 3px;
+  height: 45px;
+  background-color: #2BE080;
+  color: #fff;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  /* identical to box height */
+
+  text-align: center;
+  cursor: pointer;
+  transition: .3s;
+  outline: none;
+  display: none;
+}
+
+.profile-form__submit:hover {
+  opacity: .8;
+}
+
+@media screen and (min-width: 320px) and (max-width: 767px) {
+  .profile-form__submit {
+    margin: 370px 0 50px;
+    font-size: 12px;
+    line-height: 15px;
+  }
+}

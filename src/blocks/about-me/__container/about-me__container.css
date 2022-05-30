@@ -1,0 +1,30 @@
+.about-me__container {
+  display: grid;
+  margin-top: 66px;
+}
+
+@media screen and (min-width: 320px) and (max-width: 767px) {
+  .about-me__container {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 36px 16px minmax(min-content, max-content) 17px;
+    row-gap: 20px;
+  }
+}
+
+@media screen and (min-width: 767px) and (max-width: 1024px) {
+  .about-me__container {
+    grid-template-columns: repeat(2, minmax(min-content, max-content));
+    grid-template-rows: 40px 18px 205px;
+    row-gap: 16px;
+    column-gap: 49px;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .about-me__container {
+    row-gap: 26px;
+    column-gap: 270px;
+    grid-template-columns: repeat(2, minmax(min-content, max-content));
+    grid-template-rows: 58px 20px 205px;
+  }
+}
