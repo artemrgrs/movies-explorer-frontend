@@ -1,3 +1,6 @@
 .films__save-button_type_remove {
     background-image: url('../../images/remove-film.svg');
 }
+.not-found-cards{
+    text-align: center;
+}

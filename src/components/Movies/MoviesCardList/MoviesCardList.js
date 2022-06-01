@@ -11,25 +11,27 @@ function MoviesCardList({
     onMovieDelete,
     savedIds,
 }) {
+    
     return (
         <section className="films project__wrapper">
-            {message ? <p className="films__message">{message}</p> : ""}
-
-            {movies.length ? (
+            {movies.length
+              ? (
                 <ul className="films__list">
                     {movies.map((movie, i) => (
                         <MoviesCard
                             movie={movie}
-                            key={movie.id || movie._id || movie.movieId}
+                            key={movie.id || movie.movieId}
                             onMovieSave={onMovieSave}
                             onMovieDelete={onMovieDelete}
                             saved={savedIds.includes(movie.id)}
                         />
                     ))}
                 </ul>
-            ) : (
-                ""
-            )}
+            )
+              : (
+                <div className={'films-none'}>Ничего не найдено</div>
+              )
+            }
 
             <div className="films__more-block">
                 {moreButtonVisible ? (

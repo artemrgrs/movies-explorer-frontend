@@ -18,7 +18,7 @@ function Movies({
     savedIds,
 }) {
     useEffect(() => {
-        if (searchText && movies.length === 0) {
+        if (searchText && !movies.length) {
             onError("Ничего не найдено");
         } else {
             onError("");

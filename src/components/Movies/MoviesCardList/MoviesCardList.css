@@ -13,6 +13,10 @@
     margin: 35px 0 0;
     color: #ff3459;
 }
+.films-none{
+    text-align: center;
+    color: #ff3459;
+}
 .films__more-block {
     min-height: 187px;
 }

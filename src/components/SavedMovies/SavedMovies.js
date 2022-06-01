@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./SavedMovies.css";
 import SearchForm from "../Movies/SearchForm/SearchForm";
 import MoviesCardList from "../Movies/MoviesCardList/MoviesCardList";
 import Preloader from "../Preloader/Preloader";
+
+
 
 function SavedMovies({
     onSearchForm,
@@ -13,6 +15,15 @@ function SavedMovies({
     onMovieDelete,
     savedIds,
 }) {
+    
+    useEffect(() => {
+        if (searchText && !movies.length) {
+            onError("Ничего не найдено");
+        } else {
+            onError("");
+        }
+    }, [movies]);
+    
     return (
         <main className="main">
             <SearchForm
