@@ -1,124 +1,164 @@
-import React, { useState, useEffect, useContext } from "react";
-import { Link } from "react-router-dom";
-import { CurrentUserContext } from "../../contexts/CurrentUserContext";
-import "./Profile.css";
+import React from 'react';
+import { useHistory } from 'react-router-dom';
+import './Profile.css';
+import { CurrentUserContext } from '../../contexts/CurrentUserContext';
+import { useFormValidation } from '../../utils/utils';
+import mainApi from '../../utils/MainApi';
+import {
+	formSubmitErrorText,
+	formSubmitSuccesText,
+} from '../../utils/constants';
 
-import { REGEXP_EMAIL_CHECK } from "../../regexp";
+function Profile() {
+	const history = useHistory();
 
-function Profile({ onEditUser, formError, isLoading, onLogoutUser }) {
-    // TODO
-    const [name, setName] = useState("");
-    const [email, setEmail] = useState("");
+	const context = React.useContext(CurrentUserContext);
+	const {
+		setInitialMovies,
+		setIsLoggedIn,
+		currentUser,
+		setCurrentUser,
+		setMovies,
+		setMoviesInputValue,
+		setShortFilmsCheckboxValue,
+		formSubmitError,
+		setFormSubmitError,
+		setIsFirstSearchHappened,
+	} = context;
 
-    const [nameError, setNameError] = useState("");
-    const [emailError, setEmailError] = useState("");
+	// Стейт сообщения пользователю об успешной отправке данных
+	const [formSubmitSucces, setFormSubmitSucces] = React.useState(null);
 
-    const [isValid, setIsValid] = useState(false);
+	// Выход из профиля (меняем стейты, удаляем данные текущего пользователя из хранилища и редиректим на главную)
+	const handleProfileExit = (e) => {
+		setInitialMovies([]);
+		setMovies([]);
+		setMoviesInputValue('');
+		setShortFilmsCheckboxValue(false);
+		setIsFirstSearchHappened(false);
+		try {
+			localStorage.removeItem('token');
+			localStorage.removeItem('movies');
+			localStorage.removeItem('moviesInputValue');
+			localStorage.removeItem('shortFilmsCheckboxValue');
+		} catch (err) {
+			console.log(err);
+		}
+		setIsLoggedIn(false);
+		setCurrentUser({});
+		history.push('/');
+	};
 
-    // Подписка на контекст
-    const currentUser = useContext(CurrentUserContext);
+	// Набор переменных и функций для валидации формы ввода
+	const { values, errors, isValid, handleValuesChange, resetValidation } =
+		useFormValidation();
 
-    useEffect(() => {
-        setName(currentUser.name);
-        setEmail(currentUser.email);
-    }, [currentUser]);
+	// Заполняем инпуты значениями полей профиля при монтировании компонента
+	React.useEffect(() => {
+		resetValidation({
+			values: {
+				nameInput: currentUser.name,
+				emailInput: currentUser.email,
+			},
+		});
+	}, [currentUser.name, currentUser.email, resetValidation]);
 
-    function checkValid() {
-        if (
-            !nameError &&
-            !emailError &&
-            name &&
-            email &&
-            (name !== currentUser.name || email !== currentUser.email)
-        ) {
-            setIsValid(true);
-        } else {
-            setIsValid(false);
-        }
-    }
+	// Очищаем стейты сообщений пользователю о результатах отправки данных
+	React.useEffect(() => {
+		setFormSubmitSucces(null);
+		setFormSubmitError(null);
+	}, [setFormSubmitError]);
 
-    useEffect(() => {
-        checkValid();
-    }, [name, email, currentUser]);
+	// Обработчик отправки формы
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		setFormSubmitSucces(null);
+		setFormSubmitError(null);
+		mainApi
+			.editProfile({ name: values.nameInput, email: values.emailInput })
+			.then((userData) => {
+				setCurrentUser({
+					...userData,
+					name: userData.name,
+					email: userData.email,
+				});
+				setFormSubmitSucces(formSubmitSuccesText);
+			})
+			.catch((err) => {
+				console.log(err);
+				// выводим ошибку отправки данных
+				setFormSubmitError(formSubmitErrorText);
+			});
+	};
 
-    function handleNameChange(e) {
-        let value = e.target.value;
-
-        if ((value.length < 2 && value.length > 0) || value.length > 30) {
-            setNameError("Ошибка!");
-            setIsValid(false);
-        } else {
-            setNameError("");
-        }
-
-        setName(value);
-    }
-    function handleEmailChange(e) {
-        let value = e.target.value;
-
-        if (!REGEXP_EMAIL_CHECK.test(value) && value.length > 0) {
-            setEmailError("Ошибка!");
-            setIsValid(false);
-        } else {
-            setEmailError("");
-        }
-
-        setEmail(e.target.value);
-    }
-
-    function handleSubmit(e) {
-        e.preventDefault();
-
-        onEditUser({
-            name,
-            email,
-        });
-    }
-
-    return (
-        <main className="main">
-            <section className="user project__wrapper">
-                <h1 className="user__hello">Привет, {currentUser.name}!</h1>
-                <form onSubmit={handleSubmit}>
-                    <p className="user__name">
-                        <span className="user__name-title">Имя</span>
-                        <input
-                            onChange={handleNameChange}
-                            type="text"
-                            className="user__input"
-                            value={name || ""}
-                        ></input>
-                    </p>
-                    <p className="user__email">
-                        <span className="user__email-title">E-mail</span>
-                        <input
-                            onChange={handleEmailChange}
-                            type="text"
-                            className="user__input"
-                            value={email || ""}
-                        ></input>
-                    </p>
-
-                    <div className="user__links">
-                        <p className="form-error">{formError}</p>
-                        <button
-                            className="user__edit-button"
-                            disabled={!isValid || isLoading}
-                        >
-                            Редактировать
-                        </button>
-                        <Link
-                            onClick={onLogoutUser}
-                            to="#"
-                            className="project__link user__link-logout"
-                        >
-                            Выйти из аккаунта
-                        </Link>
-                    </div>
-                </form>
-            </section>
-        </main>
-    );
+	return (
+		<form className='profile' name='user-profile-form' noValidate>
+			<h2 className='profile__title'>{currentUser.name}</h2>
+			<div className='profile__inputs-container'>
+				<div className='profile__input-wrapper'>
+					<label
+						className='profile__input-label'
+						htmlFor='profile-username-input'>
+						Имя
+					</label>
+					<input
+						className='profile__input'
+						type='text'
+						name='nameInput'
+						required
+						minLength='3'
+						maxLength='16'
+						value={values.nameInput || ''}
+						onChange={handleValuesChange}
+					/>
+					<span className={`profile__input-error profile__input-error_active`}>
+						{errors.nameInput}
+					</span>
+				</div>
+				<div className='profile__input-wrapper'>
+					<label className='profile__input-label' htmlFor='profile-email-input'>
+						Почта
+					</label>
+					<input
+						className='profile__input'
+						type='email'
+						name='emailInput'
+						required
+						value={values.emailInput || ''}
+						onChange={handleValuesChange}
+					/>
+					<span className={`profile__input-error profile__input-error_active`}>
+						{errors.emailInput}
+					</span>
+				</div>
+			</div>
+			<div className='profile__buttons-container'>
+				<span
+					className={`profile__submit-result${
+						formSubmitError || formSubmitSucces
+							? ' profile__submit-result_active'
+							: ''
+					}${formSubmitError ? ' profile__submit-result_type_error' : ''}`}>
+					{formSubmitError || formSubmitSucces}
+				</span>
+				<button
+					className={`app__link profile__button${
+						!isValid ? ' profile__button_inactive' : ''
+					}`}
+					type='submit'
+					onClick={handleSubmit}
+					disabled={!isValid ? true : false}>
+					Редактировать
+				</button>
+				<button
+					className='app__link profile__button'
+					type='button'
+					onClick={handleProfileExit}>
+					Выйти из аккаунта
+				</button>
+			</div>
+		</form>
+	);
 }
 
 export default Profile;

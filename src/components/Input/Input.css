@@ -1,0 +1,43 @@
+.input {
+	width: 100%;
+	position: relative;
+}
+
+.input__label {
+	display: block;
+	padding: 20px 0 10px;
+	font-weight: 400;
+	font-size: 10px;
+	line-height: 12px;
+	color: #a0a0a0;
+}
+
+.input__input {
+	width: 100%;
+	padding: 15px;
+	box-sizing: border-box;
+	font-weight: 400;
+	font-size: 13px;
+	line-height: 16px;
+	border: none;
+	background: #f9f9f9;
+	border-radius: 8px;
+}
+.input__input:focus {
+	outline: none;
+}
+
+.input__error {
+	position: absolute;
+	bottom: -12px;
+	left: 0;
+	width: 100%;
+	visibility: hidden;
+	color: #ff3055;
+	font-weight: 400;
+	font-size: 10px;
+	line-height: 12px;
+}
+.input__error_active {
+	visibility: visible;
+}

@@ -1,119 +1,100 @@
-import { BASE_MAIN_URL } from "../constants";
-import { BASE_MOVIES_URL } from "../constants";
+import { mainApiConfig } from './constants';
 
-export function register(name, password, email) {
-    return fetch(`${BASE_MAIN_URL}/signup`, {
-        method: "POST",
-        headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ name, password, email }),
-    })
-        .then((response) => {
-            try {
-                return response.json();
-            } catch (e) {
-                return e;
-            }
-        })
-        .then((res) => {
-            return res;
-        })
-        .catch((err) => console.log(err));
+class MainApi {
+	constructor({ baseUrl, headers }) {
+		this._baseUrl = baseUrl;
+		this._headers = headers;
+	}
+	// Проверка ответа сервера
+	_checkResponse(res) {
+		if (res.ok) {
+			return res.json();
+		} else {
+			return Promise.reject(`Ошибка: ${res.status}`);
+		}
+	}
+
+	// Регистрация (создание) пользователя (в ответе должны быть name, email, _id)
+	register(name, email, password) {
+		return fetch(`${this._baseUrl}signup`, {
+			method: 'POST',
+			headers: this._headers,
+			body: JSON.stringify({
+				name: name,
+				email: email,
+				password: password,
+			}),
+		}).then(this._checkResponse);
+	}
+
+	// Авторизация пользователя (в ответе должен быть токен)
+	login(email, password) {
+		return fetch(`${this._baseUrl}signin`, {
+			method: 'POST',
+			headers: this._headers,
+			body: JSON.stringify({ password, email }),
+		}).then(this._checkResponse);
+	}
+
+	// Установка токена в заголовки
+	setTokenHeaders(token) {
+		this._headers = {
+			...this._headers,
+			Authorization: token,
+			// Authorization: `Bearer ${token}`,--- если Bearer дбавлять здесь, то и на бэке нужно уго убирать при проверке
+		};
+	}
+
+	// Проверка токена (получение данных текущего пользователя, (в ответе должны быть name, email, _id))
+	checkToken(token) {
+		return fetch(`${this._baseUrl}users/me`, {
+			method: 'GET',
+			headers: {
+				...this._headers,
+				// Authorization: `Bearer ${token}`,
+				Authorization: token,
+			},
+		}).then(this._checkResponse);
+	}
+
+	// Редактирование профиля пользователя (в ответе должны быть name, email, _id)
+	editProfile({ name, email }) {
+		return fetch(`${this._baseUrl}users/me`, {
+			method: 'PATCH',
+			headers: this._headers,
+			body: JSON.stringify({
+				name: name,
+				email: email,
+			}),
+		}).then(this._checkResponse);
+	}
+
+	// Получение массива сохраненных карточек
+	getCards() {
+		return fetch(`${this._baseUrl}movies`, {
+			method: 'GET',
+			headers: this._headers,
+		}).then(this._checkResponse);
+	}
+
+	// Создание карточки
+	createCard(card) {
+		return fetch(`${this._baseUrl}movies`, {
+			method: 'POST',
+			headers: this._headers,
+			body: JSON.stringify(card),
+		}).then(this._checkResponse);
+	}
+
+	// Удаление карточки
+	deleteCard(cardId) {
+		return fetch(`${this._baseUrl}movies/${cardId}`, {
+			method: 'DELETE',
+			headers: this._headers,
+		}).then(this._checkResponse);
+	}
 }
 
-export function authorize(email, password) {
-    return fetch(`${BASE_MAIN_URL}/signin`, {
-        method: "POST",
-        headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-    })
-        .then((response) => response.json())
-        .then((data) => {
-            return data;
-        })
-        .catch((err) => console.log(err));
-}
+const mainApi = new MainApi(mainApiConfig);
 
-export function getUserInfo(token) {
-    return fetch(`${BASE_MAIN_URL}/users/me`, {
-        method: "GET",
-        headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-        },
-    })
-        .then((res) => res.json())
-        .then((data) => data)
-        .catch((err) => console.log(err));
-}
-
-export function getAllSavedMovies() {
-    return fetch(`${BASE_MAIN_URL}/movies`, {
-        headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-            "Content-Type": "application/json",
-        },
-    }).then((res) => {
-        return res.json();
-    }).catch((err) => console.log(err));
-}
-
-export function postMovie(movie) {
-    return fetch(`${BASE_MAIN_URL}/movies`, {
-        method: "POST",
-        headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-            movieId: movie.id,
-            nameRU: movie.nameRU || "не указано",
-            nameEN: movie.nameEN || "не указано",
-            thumbnail: `${BASE_MOVIES_URL}${movie.image.formats.thumbnail.url}`,
-            trailer: movie.trailerLink,
-            image: BASE_MOVIES_URL + movie.image.url,
-            description: movie.description || "не указано",
-            year: movie.year,
-            duration: movie.duration,
-            director: movie.director || "не указано",
-            country: movie.country || "не указано",
-        }),
-    }).then((res) => {
-        return res.json();
-    }).catch((err) => console.log(err));
-}
-
-export function deleteMovie(id) {
-    return fetch(`${BASE_MAIN_URL}/movies/${id}`, {
-        method: "DELETE",
-        headers: {
-            Accept: "application/json",
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-            "Content-Type": "application/json",
-        },
-    }).then((res) => {
-        return res.json();
-    }).catch((err) => console.log(err));
-}
-
-export function editUserInfo(name, email) {
-    return fetch(`${BASE_MAIN_URL}/users/me`, {
-        method: "PATCH",
-        headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-            name: name,
-            email: email,
-        }),
-    }).then((res) => {
-        return res.json();
-    }).catch((err) => console.log(err));
-}
+export default mainApi;

@@ -1,25 +1,81 @@
-import React from "react";
-import "./Portfolio.css";
-import linkIcon from "../../images/link-icon.svg";
+import React from 'react';
+import './Portfolio.css';
+import arrowIcon from '../../images/icon_arrow.svg';
 
 function Portfolio() {
-  return(
-    <div className="portfolio">
-      <h2 className="portfolio__header">Портфолио</h2>
-      <div className="portfolio__link">
-        <a className="portfolio__text" href="https://" target="_blank" rel="noreferrer">Статичный сайт</a>
-        <img src={linkIcon} alt="Переход по ссылке" className="portfolio__icon"/>
-      </div>
-      <div className="portfolio__link">
-        <a className="portfolio__text" href="https://" target="_blank" rel="noreferrer">Адаптивный сайт</a>
-        <img src={linkIcon} alt="Переход по ссылке" className="portfolio__icon"/>
-      </div>
-      <div className="portfolio__link">
-        <a className="portfolio__text" href="https://" target="_blank" rel="noreferrer">Одностраничное приложение</a>
-        <img src={linkIcon} alt="Переход по ссылке" className="portfolio__icon"/>
-      </div>
-    </div>
-  )
+	return (
+		<div className='portfolio'>
+			<h4 className='portfolio__title'>Портфолио</h4>
+			<ul className='portfolio__list'>
+				<li className='portfolio__list-item'>
+					<a
+						className='app__link portfolio__project-name'
+						href='#'
+						rel='noreferrer'
+						target='_blank'
+						title='#'>
+						Статичный сайт
+					</a>
+					<a
+						className='app__link'
+						href='#'
+						rel='noreferrer'
+						target='_blank'
+						title='hhttps://izverk.github.io/how-to-learn/'>
+						<img
+							className='portfolio__arrow-icon'
+							src={arrowIcon}
+							alt='Иконка-стрелка'
+						/>
+					</a>
+				</li>
+				<li className='portfolio__list-item'>
+					<a
+						className='app__link portfolio__project-name'
+						href='#'
+						rel='noreferrer'
+						target='_blank'
+						title='#'>
+						Адаптивный сайт
+					</a>
+					<a
+						className='app__link portfolio__project-arrow'
+						href='#'
+						rel='noreferrer'
+						target='_blank'
+						title='#'>
+						<img
+							className='portfolio__arrow-icon'
+							src={arrowIcon}
+							alt='Иконка-стрелка'
+						/>
+					</a>
+				</li>
+				<li className='portfolio__list-item'>
+					<a
+						className='app__link portfolio__project-name'
+						href='#'
+						rel='noreferrer'
+						target='_blank'
+						title='#'>
+						Одностраничное приложение
+					</a>
+					<a
+						className='app__link portfolio__project-arrow'
+						href='#'
+						rel='noreferrer'
+						target='_blank'
+						title='#'>
+						<img
+							className='portfolio__arrow-icon'
+							src={arrowIcon}
+							alt='Иконка-стрелка'
+						/>
+					</a>
+				</li>
+			</ul>
+		</div>
+	);
 }
 
 export default Portfolio;

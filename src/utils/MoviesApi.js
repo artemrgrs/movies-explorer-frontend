@@ -1,14 +1,29 @@
-import { BASE_MOVIES_URL } from "../constants";
+import { moviesApiConfig } from '../utils/constants';
 
-export function getAllMovies() {
-    return fetch(`${BASE_MOVIES_URL}/beatfilm-movies`, {
-        method: 'GET',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-        },
-    })
-        .then(res => res.json())
-        .then(data => data)
-        .catch((err) => console.log(err));
+class MoviesApi {
+	constructor({ baseUrl, headers }) {
+		this._baseUrl = baseUrl;
+		this._headers = headers;
+	}
+
+	// Проверка ответа сервера
+	_checkResponse(res) {
+		if (res.ok) {
+			return res.json();
+		} else {
+			return Promise.reject(`Ошибка: ${res.status}`);
+		}
+	}
+
+	// Получение массива фильмов
+	getMovies() {
+		return fetch(`${this._baseUrl}`, {
+			method: 'GET',
+			headers: this._headers,
+		}).then(this._checkResponse);
+	}
 }
+
+const moviesApi = new MoviesApi(moviesApiConfig);
+
+export default moviesApi;
