@@ -1,18 +1,25 @@
 import React from "react";
-import Promo from "../Promo/Promo";
-import AboutProject from "../AboutProject/AboutProject";
-import Techs from "../Techs/Techs";
-import AboutMe from "../AboutMe/AboutMe";
-import Portfolio from "../Portfolio/Portfolio";
-function Main() {
-  return(
-    <section className="main">
-      <Promo/>
-      <AboutProject/>
-      <Techs/>
-      <AboutMe/>
-      <Portfolio/>
-    </section>
+import Header from "../Header/Header";
+import AboutProject from "./AboutProject/AboutProject";
+import Techs from "./Techs/Techs";
+import AboutMe from "./AboutMe/AboutMe";
+import Portfolio from "./Portfolio/Portfolio";
+import Footer from "../Footer/Footer";
+import Intro from "../Intro/Intro"
+
+function Main({ isLoggedIn }) {
+  return (
+    <>
+      <main className="content">
+      <Header isLoggedIn={isLoggedIn} />
+        <Intro />
+        <AboutProject />
+        <Techs />
+        <AboutMe />
+        <Portfolio />
+      </main>
+      <Footer />
+    </>
   )
 }
 

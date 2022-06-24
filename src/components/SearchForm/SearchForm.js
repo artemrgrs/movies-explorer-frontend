@@ -1,49 +1,70 @@
 import React from "react";
+import "./SearchForm.css";
 import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
-import './SearchForm.css';
-import SubmitForm from '../../images/submit-btn.svg';
+import SearchIcon from "../../images/icon-search.svg"
+import { useLocation } from "react-router-dom";
 
+function SearchForm({ onSubmit, setMovies, suffix, moviesFiltered}) {
 
-function SearchForm() {
-	const [movie, setMovie] = React.useState('');
-	
-	function handleSearchMovie(e) {
-		setMovie(e.target.value);
-	}
-	
-	function handleSubmit(e) {
-		e.preventDefault();
-	}
-	
-	return (
-		<div className="search-form">
-			<form
-				method="post"
-				action="index.html"
-				name="search"
-				className="search-form__container"
-				onSubmit={ handleSubmit }
-				noValidate
-			>
-				<label className="search-form__field" htmlFor="movie">
-					<input
-						name="movie"
-						type="text"
-						placeholder="Фильм"
-						value={ movie }
-						onChange={ handleSearchMovie }
-						id="movie"
-						className="search-form__input search-form__input-movie"
-						required
-					/>
-				</label>
-				<button type="submit" className="search-form__submit">
-					<img src={ SubmitForm } alt="иконка поиска"/>
-				</button>
-			</form>
-			<FilterCheckbox/>
-		</div>
-	)
+  const [keyword, setKeyword] = React.useState('');
+  const [checked, setChecked] = React.useState(false);
+  const [restoreFinished, setRestoreFinished] = React.useState(false);
+  const location = useLocation();
+
+  React.useEffect(() => {
+    if(!restoreFinished){
+      setTimeout(function(){
+
+        const search = JSON.parse(localStorage.getItem(`search${suffix}`));
+        const checked = JSON.parse(localStorage.getItem(`checked${suffix}`));
+        const moviesFilter = JSON.parse(localStorage.getItem(`moviesFilter${suffix}`));
+        if (search) {
+          setKeyword(search);
+          setChecked(checked);
+          setMovies(moviesFilter);
+        }
+        setRestoreFinished(true)
+      }, 100);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [moviesFiltered]);
+
+  React.useEffect(() => {
+    if(restoreFinished){
+      if (keyword || location.pathname === '/saved-movies') {
+        handleSubmit();
+      }
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [checked]);
+
+  function handleSubmit(e) {
+    if (e) e.preventDefault();
+    onSubmit(keyword, checked);
+
+  }
+
+  function handleKeywordChange(e) {
+    setKeyword(e.target.value)
+  }
+
+  function chengeCheckbox(e) {
+    setChecked(!checked);
+  }
+
+  return (
+    <section className="search">
+      <div className="search__container">
+        <div className="search_c">
+        <form className="search__form" noValidate onSubmit={handleSubmit}>
+          <img className="search__icon" src={SearchIcon} alt="Поиск" />
+          <input className="search__input" id="search" type="text" placeholder="Фильм" minLength="1" value={keyword} maxLength="50" onChange={handleKeywordChange} />
+        </form>
+        <button className="search__btn" type="submit" onClick={handleSubmit}/>
+        </div>
+        <FilterCheckbox checked={checked} onChange={chengeCheckbox} />
+      </div>
+    </section>
+  )
 }
-
 export default SearchForm;

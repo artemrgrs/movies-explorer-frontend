@@ -1,0 +1,130 @@
+.navigation__burger-btn {
+  padding: 0;
+  width: 44px;
+  height: 44px;
+  border: none;
+  background-color: transparent;
+  background-image: url(../../../images/icon-burger.svg);
+  cursor: pointer;
+}
+
+.navigation__burger-btn:hover {
+  opacity: 0.7;
+  transition: .2s linear; 
+}
+
+.navigation__burger-container {
+  position: fixed;
+  background: rgba(0, 0, 0, 0.3);
+  opacity: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  visibility: hidden;
+  transition: visibility 0.4s, opacity 0.3s ease-in-out;
+  z-index: 1;
+}
+
+.navigation__burger-container_open {
+  visibility: visible;
+  opacity: 1;
+}
+
+.navigation__btn-close {
+  padding: 0;
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  top: 22px;
+  right: 22px;
+  cursor: pointer;
+  border: none;
+  background-image: url(../../../images/close.svg);
+  background-color: transparent;
+  background-position: 50% 50%;
+}
+
+.navigation__btn-close:hover {
+  opacity: 0.7;
+  transition: .2s linear; 
+}
+
+.navigation__burger-popup {
+  position: fixed;
+  display: none;
+  flex-direction: column;
+  width: 68%;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  justify-content: space-between;
+}
+
+.navigation__burger-popup_open {
+  display: flex;
+  background-color: #202020;
+}
+
+.navigation__burger-container-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 159px;
+}
+
+.navigation__link-burger {
+  font-size: 18px;
+  line-height: 22px;
+  margin-bottom: 28px;
+}
+
+.navigation__link-burger_active {
+  padding-bottom: 4px;
+  border-bottom: 2px solid #FFFFFF;
+}
+
+.navigation__link-burger_type_account {
+  display: flex;
+  align-items: center;
+  margin: 0 auto;
+  font-size: 13px;
+  line-height: 12px;
+  margin-bottom: 90px;
+}
+
+.navigation__burger-account-icon {
+  background-color: #313131;
+  height: 11px;
+  width: 11px;
+  padding: 8px;
+  margin-left: 7px;
+  border-radius: 50px;
+}
+
+@media (max-width: 475px) {
+  .navigation__burger-btn {
+    width: 40px;
+    height: 42px;
+  }
+
+  .navigation__burger-popup {
+    width: 100%;
+  }
+
+  .navigation__burger-container-link{
+    margin-top: 144px;
+  }
+
+  .navigation__link-burger {
+    margin-bottom: 24px;
+  }
+
+  .navigation__link-burger_active {
+    padding-bottom: 7px;
+  }
+  
+  .navigation__link-burger_type_account {
+    margin-bottom: 46px;
+  }
+}

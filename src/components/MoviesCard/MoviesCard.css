@@ -1,7 +1,100 @@
-@import url(../../blocks/movie/movie.css);
-@import url(../../blocks/movie/__title/movie__title.css);
-@import url(../../blocks/movie/__save-btn/movie__save-btn.css);
-@import url(../../blocks/movie/__save-btn/_active/movie__save-btn_active.css);
-@import url(../../blocks/movie/__delete-btn/movie__delete-btn.css);
-@import url(../../blocks/movie/__img/movie__img.css);
-@import url(../../blocks/movie/__duration/movie__duration.css);
+.movie {
+  max-width: 364px;
+  display: flex;
+  flex-direction: column;
+  background-color: #FDFDFD;
+  border-radius: 6px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.08);
+}
+
+.movie__container {
+  grid-gap: 9px 26px;
+  box-sizing: border-box;
+  display: grid;
+  gap: 9px 26px;
+  grid-template-areas:
+        "movie-title movie-icon"
+        "movie-duration movie-icon";
+  grid-template-columns: 1fr min-content;
+  grid-template-rows: repeat(2,min-content);
+  padding: 14px;
+}
+
+.movie__time {
+  display: block;;
+  font-size: 13px;
+  line-height: 18px;
+  color: #8B8B8B;
+  white-space: nowrap;
+  grid-area: movie-duration;
+}
+
+.movie__title {
+  color: #000;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 500;
+  grid-area: movie-title;
+  line-height: 18px;
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.movie__trailerlink {
+  display: flex;
+  text-decoration: none;
+  justify-content: center;
+
+
+}
+
+.movie__poster {
+  display: block;
+  height: 200px;
+  overflow: hidden;
+}
+
+.movie__btn {
+  grid-area: movie-icon;
+  color: #FFFFFF;
+  height: 30px;
+  width: 30px;
+  font-size: 12px;
+  line-height: 11px;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  border-radius: 30px;
+  background: transparent url(../../images/no-active.svg) no-repeat center;
+}
+
+.movie__btn:hover {
+  opacity: .7;
+  transition: .2s linear;
+}
+
+
+.movie__btn_type_active {
+  background: transparent url(../../images/btn-active.svg) no-repeat center;
+}
+
+.movie__btn_type_delete {
+  background: #F9F9F9 url(../../images/delete-btn.svg) no-repeat center;
+}
+
+
+
+@media (max-width: 780px) {
+  .movie__poster {
+    height: 190px;
+  }
+}
+
+@media (max-width: 475px) {
+  .movie__poster {
+    width: auto;
+    height: 168px;
+  }
+}

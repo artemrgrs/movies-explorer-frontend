@@ -1,0 +1,9 @@
+.message {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+  font-size: 12px;
+  line-height: 12px;
+  font-weight: 400;
+  color: #EE3465;
+}

@@ -1,2 +1,7 @@
 @import url(./vendor/normalize.css);
-@import url(./vendor/fonts/inter.css);
+@import url(./vendor/fonts/fonts.css);
+
+.root {
+  background-color: #FFF;
+  min-height: 100vh;
+}

@@ -1,73 +1,55 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import './Login.css';
-import formLogo from '../../images/header-logo.svg';
+import Form from "../Form/Form";
+import Input from "../Input/Input";
+import { useFormWithValidation } from "../../utils/Validation";
+import Message from "../Message/Message";
 
-function Login() {
-  const [email, setEmail] = React.useState("");
-  const [password, setPassword] = React.useState("");
+function Login({ onLogin, message, setMessege }) {
 
-  function handleChangeEmail(e) {
-    setEmail(e.target.value);
-  }
+  const { values, handleChange, errors, isValid, resetForm } = useFormWithValidation();
 
-  function handleChangePassword(e) {
-    setPassword(e.target.value);
-  }
+  React.useEffect(() => {
+    resetForm({});
+    setMessege(null);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   function handleSubmit(e) {
     e.preventDefault();
-  }
-
-  return(
-    <div className="form">
-      <img alt="Логотип сервиса" src={formLogo} className="form__logo"></img>
-      <h2 className="form__header">Рады видеть!</h2>
-      <form
-        method="post"
-        action="index.html"
-        name="sign-in"
-        className="form__container"
-        onSubmit={handleSubmit}
-        noValidate
-      >
-        <label className="form__field" htmlFor="email">
-          <p className="form__input-title">E-mail</p>
-          <input
-            name="email"
-            type="email"
-            value={email}
-            onChange={handleChangeEmail}
-            id="email"
-            className="form__input form__input-email"
-            required
-          ></input>
-          <span className="form__input-error" id="email-input-error"></span>
-        </label>
-        <label className="form__field" htmlFor="password">
-          <p className="form__input-title">Пароль</p>
-          <input
-            name="password"
-            type="password"
-            value={password}
-            minLength="8"
-            onChange={handleChangePassword}
-            id="password"
-            className="form__input form__input-password"
-            required
-          ></input>
-          <span className="form__input-error" id="password-input-error"></span>
-        </label>
-        <button type="submit" className="form__submit">
-          Войти
-        </button>
-      </form>
-      <p className="form__caption">
-        Ещё не зарегистрированы?
-        <Link to="/signup" className="form__link">Регистрация</Link>
-      </p>
-    </div>
-  )
+    const { email, password } = values;
+    onLogin( email, password );
 }
 
+  return (
+    <Form title="Рады видеть!" name="signin" textBtn="Войти" text="Еще не зарегистрированы?" textLink="Регистрация" path="/signup" isValid={isValid} onSubmit={handleSubmit}>
+      <Input
+        value={values.email || ''}
+        textLabel="E-mail"
+        textErr={errors.email}
+        inputId="email"
+        labelFor="email"
+        type="email"
+        inputName="email"
+        spanId="email-error"
+        onChange={handleChange}
+        required
+      />
+      <Input
+        value={values.password || ''}
+        textLabel="Пароль"
+        textErr={errors.password}
+        inputId="password"
+        labelFor="password"
+        type="password"
+        inputName="password"
+        spanId="password-error"
+        minLength="5"
+        maxLength="30"
+        onChange={handleChange}
+        required
+      />
+      <Message message={message} />
+    </Form>
+  )
+}
 export default Login;

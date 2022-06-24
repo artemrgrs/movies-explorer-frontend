@@ -1,32 +1,11 @@
 import React from "react";
-import MoviesCard from "../MoviesCard/MoviesCard";
-import './MoviesCardList.css';
+import "./MoviesCardList.css"
 
-function MoviesCardList(props) {
-  return(
-    <div className="movies__container">
-      <MoviesCard
-      children={props.children}>
-      </MoviesCard>
-      <MoviesCard
-        children={props.children}>
-      </MoviesCard>
-      <MoviesCard
-        children={props.children}>
-      </MoviesCard>
-      <MoviesCard
-        children={props.children}>
-      </MoviesCard>
-      <MoviesCard
-        children={props.children}>
-      </MoviesCard>
-      <MoviesCard
-        children={props.children}>
-      </MoviesCard>
-      <MoviesCard
-        children={props.children}>
-      </MoviesCard>
-    </div>
+function MoviesCardList({ children }) {
+  return (
+    <section className="movies">
+      <ul className="movies__list">{children}</ul>
+    </section>
   )
 }
 
