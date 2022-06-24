@@ -1,9 +1,0 @@
-.movies-del-button {
-	padding: 0;
-	width: 30px;
-	height: 30px;
-	cursor: pointer;
-	background: transparent url(../../images/icon_cross.svg) center / 100% 100%
-		no-repeat;
-	border: none;
-}

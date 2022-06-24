@@ -1,73 +1,71 @@
-import React from 'react';
-import './Register.css';
-import AuthForm from '../AuthForm/AuthForm';
-import Input from '../Input/Input';
-import { useFormValidation } from '../../utils/utils';
+import React from "react";
+import Form from "../Form/Form";
+import Input from "../Input/Input";
+import { useFormWithValidation } from "../../utils/Validation";
+import Message from "../Message/Message";
 
-function Register({ registerUser, formSubmitError, setFormSubmitError }) {
-	// Набор переменных и функций для валидации формы ввода
-	const { values, errors, isValid, handleValuesChange, resetValidation } =
-		useFormValidation();
+function Register({ onRegister, message, setMessege }) {
 
-	// Сбрасываем валидацию один раз при монтировании
-	React.useEffect(() => {
-		resetValidation({});
-	}, [resetValidation]);
+  const { values, handleChange, errors, isValid, resetForm } = useFormWithValidation();
 
-	// Обработчик отправки формы
-	const handleSubmit = (e) => {
-		e.preventDefault();
-		setFormSubmitError(null);
-		registerUser({
-			name: values.nameInput,
-			email: values.emailInput,
-			password: values.passwordInput,
-		});
-	};
+  React.useEffect(() => {
+    resetForm({});
+    setMessege(null);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-	return (
-		<AuthForm
-			title='Добро пожаловать!'
-			buttonText='Зарегистрироваться'
-			text='Уже зарегистрированы?'
-			linkText='Войти'
-			linkPath='/signin'
-			isValid={isValid}
-			formSubmitError={formSubmitError}
-			setFormSubmitError={setFormSubmitError}
-			handleSubmit={handleSubmit}>
-			<Input
-				labelText='Имя'
-				type='text'
-				name='nameInput'
-				minLength={3}
-				maxLength={16}
-				required={true}
-				values={values}
-				handleValuesChange={handleValuesChange}
-				errors={errors}
-			/>
-			<Input
-				labelText='E-mail'
-				type='email'
-				name='emailInput'
-				required={true}
-				values={values}
-				handleValuesChange={handleValuesChange}
-				errors={errors}
-			/>
-			<Input
-				labelText='Пароль'
-				type='password'
-				name='passwordInput'
-				minLength={6}
-				required={true}
-				values={values}
-				handleValuesChange={handleValuesChange}
-				errors={errors}
-			/>
-		</AuthForm>
-	);
+  function handleSubmit(e) {
+    e.preventDefault();
+    const {name, email, password } = values;
+    onRegister(name, email, password);
+  }
+
+  return (
+    <Form title="Добро пожаловать!" name="signup" textBtn="Зарегистрироваться" text="Уже зарегистрированы?" textLink="Войти" path="/signin" isValid={isValid} onSubmit={handleSubmit} >
+      <Input
+        textLabel="Имя"
+        textErr={errors.name}
+        inputId="name"
+        labelFor="name"
+        type="text"
+        inputName="name"
+        spanId="name-error"
+        value={values.name || ''}
+        onChange={handleChange}
+        required
+        
+        
+      />
+      <Input
+        textLabel="E-mail"
+        textErr={errors.email}
+        inputId="email"
+        labelFor="email"
+        type="email"
+        inputName="email"
+        spanId="email-error"
+        value={values.email || ''}
+        onChange={handleChange}
+        required
+        
+      />
+      <Input
+        textLabel="Пароль"
+        textErr={errors.password}
+        inputId="password"
+        labelFor="password"
+        type="password"
+        inputName="password"
+        spanId="password-error"
+        minLength="5"
+        maxLength="30"
+        value={values.password || ''}
+        onChange={handleChange}
+        required
+        
+      />
+      <Message message={message} />
+    </Form>
+  )
 }
-
 export default Register;

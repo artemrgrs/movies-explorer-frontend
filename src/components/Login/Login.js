@@ -1,60 +1,55 @@
-import React from 'react';
-import './Login.css';
-import AuthForm from '../AuthForm/AuthForm';
-import Input from '../Input/Input';
-import { useFormValidation } from '../../utils/utils';
+import React from "react";
+import Form from "../Form/Form";
+import Input from "../Input/Input";
+import { useFormWithValidation } from "../../utils/Validation";
+import Message from "../Message/Message";
 
-function Login({ loginUser, formSubmitError, setFormSubmitError }) {
-	// Набор переменных и функций для валидации формы ввода
-	const { values, errors, isValid, handleValuesChange, resetValidation } =
-		useFormValidation();
+function Login({ onLogin, message, setMessege }) {
 
-	// Сбрасываем валидацию один раз при монтировании
-	React.useEffect(() => {
-		resetValidation({});
-	}, [resetValidation]);
+  const { values, handleChange, errors, isValid, resetForm } = useFormWithValidation();
 
-	// Обработчик отправки формы
-	const handleSubmit = (e) => {
-		e.preventDefault();
-		setFormSubmitError(null);
-		loginUser({
-			email: values.emailInput,
-			password: values.passwordInput,
-		});
-	};
-	return (
-		<AuthForm
-			title='Рады видеть!'
-			buttonText='Войти'
-			text='Ещё не зарегистрированы?'
-			linkText='Регистрация'
-			linkPath='/signup'
-			isValid={isValid}
-			formSubmitError={formSubmitError}
-			setFormSubmitError={setFormSubmitError}
-			handleSubmit={handleSubmit}>
-			<Input
-				labelText='E-mail'
-				type='email'
-				name='emailInput'
-				required={true}
-				values={values}
-				handleValuesChange={handleValuesChange}
-				errors={errors}
-			/>
-			<Input
-				labelText='Пароль'
-				type='password'
-				name='passwordInput'
-				minLength={6}
-				required={true}
-				values={values}
-				handleValuesChange={handleValuesChange}
-				errors={errors}
-			/>
-		</AuthForm>
-	);
+  React.useEffect(() => {
+    resetForm({});
+    setMessege(null);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    const { email, password } = values;
+    onLogin( email, password );
 }
 
+  return (
+    <Form title="Рады видеть!" name="signin" textBtn="Войти" text="Еще не зарегистрированы?" textLink="Регистрация" path="/signup" isValid={isValid} onSubmit={handleSubmit}>
+      <Input
+        value={values.email || ''}
+        textLabel="E-mail"
+        textErr={errors.email}
+        inputId="email"
+        labelFor="email"
+        type="email"
+        inputName="email"
+        spanId="email-error"
+        onChange={handleChange}
+        required
+      />
+      <Input
+        value={values.password || ''}
+        textLabel="Пароль"
+        textErr={errors.password}
+        inputId="password"
+        labelFor="password"
+        type="password"
+        inputName="password"
+        spanId="password-error"
+        minLength="5"
+        maxLength="30"
+        onChange={handleChange}
+        required
+      />
+      <Message message={message} />
+    </Form>
+  )
+}
 export default Login;

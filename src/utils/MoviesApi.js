@@ -1,29 +1,19 @@
-import { moviesApiConfig } from '../utils/constants';
+export const BASE_URL = 'https://api.nomoreparties.co/beatfilm-movies';
 
-class MoviesApi {
-	constructor({ baseUrl, headers }) {
-		this._baseUrl = baseUrl;
-		this._headers = headers;
-	}
+const checkResult = (res) => {
+  if (res.ok) {
+    console.log('res1',res)
+    return res.json();
+  }
+  return Promise.reject(`Ошибка: ${res.status}`)
+};
 
-	// Проверка ответа сервера
-	_checkResponse(res) {
-		if (res.ok) {
-			return res.json();
-		} else {
-			return Promise.reject(`Ошибка: ${res.status}`);
-		}
-	}
-
-	// Получение массива фильмов
-	getMovies() {
-		return fetch(`${this._baseUrl}`, {
-			method: 'GET',
-			headers: this._headers,
-		}).then(this._checkResponse);
-	}
+export const getMovies = () => {
+  return fetch(`${BASE_URL}`, {
+    method: 'GET',
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then(checkResult)
 }
-
-const moviesApi = new MoviesApi(moviesApiConfig);
-
-export default moviesApi;

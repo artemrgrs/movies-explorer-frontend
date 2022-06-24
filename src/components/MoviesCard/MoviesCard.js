@@ -1,42 +1,73 @@
-import React from 'react';
-import { Switch, Route } from 'react-router-dom';
-import './MoviesCard.css';
-import MoviesLikeButton from '../MoviesLikeButton/MoviesLikeButton';
-import MoviesDelButton from '../MoviesDelButton/MoviesDelButton';
+import React from "react";
+import { useLocation } from "react-router-dom";
+import "./MoviesCard.css";
 
-function MoviesCard({ movie }) {
+function MoviesCard({ statusBtn, movie, onSaveMovie, onDeleteMovie }) {
+	
+	const serverUrl = 'https://api.nomoreparties.co';
+	let location = useLocation();
+	
+	function handleSubmit() {
+		const movieData = {
+			country: movie.country,
+			director: movie.director,
+			duration: movie.duration,
+			year: movie.year,
+			description: movie.description,
+			image: serverUrl + movie.image.url,
+			trailer: movie.trailerLink,
+			thumbnail: serverUrl + movie.image.formats.thumbnail.url,
+			nameRU: movie.nameRU,
+			nameEN: movie.nameEN,
+			movieId: movie.id,
+		}
+		onSaveMovie(movieData);
+	}
+	
+	function handleDelete() {
+		onDeleteMovie(movie.id === undefined ? movie.movieId : movie.id)
+	}
+	
+	function duration() {
+		if (movie.duration > 60) {
+			return `${ movie.duration / 60 | 0 }ч ${ movie.duration % 60 }м`
+		}
+		if (movie.duration === 60) {
+			return `${ movie.duration / 60 }ч`
+		} else {
+			return `${ movie.duration } минут`
+		}
+	}
+	
+	const Button = (statusBtn) => {
+		switch (statusBtn) {
+			case 'saved' :
+				return <button className="movie__btn movie__btn_type_active" type="button" onClick={ handleDelete }/>
+			case 'delete' :
+				return <button className="movie__btn movie__btn_type_delete" type="button" onClick={ handleDelete }/>
+			case 'save' :
+				return <button className="movie__btn" type="button" onClick={ handleSubmit }/>
+			default :
+				return null
+		}
+	}
+	
+	
+	
 	return (
-		<div className='movies-card'>
-			<div className='movies-card__caption-container'>
-				<div className='movies-card__name-and-like-container'>
-					<span className='movies-card__name'>{movie.nameRU}</span>
-					<Switch>
-						<Route path='/movies'>
-							<MoviesLikeButton movie={movie} />
-						</Route>
-						<Route path='/saved-movies'>
-							<MoviesDelButton movie={movie} />
-						</Route>
-					</Switch>
-				</div>
-				<span className='movies-card__time'>{movie.duration}</span>
+		<li className="movie">
+			<div className="movie__container">
+					<h1 className="movie__title">{ movie.nameRU }</h1>
+				{ Button(statusBtn) }
+				<p className="movie__time">{ duration() }</p>
 			</div>
-			<div className='movies-card__poster-container'>
-				<a
-					className='app-button movies-card__poster-wrapper'
-					href={movie.trailerLink}
-					rel='noreferrer'
-					target='_blank'
-					title={movie.trailerLink}>
-					<img
-						className='movies-card__poster-photo'
-						src={movie.image}
-						alt={`Постер к фильму ${movie.nameRU}`}
-					/>
-				</a>
-			</div>
-		</div>
-	);
+			<a className="movie__trailerlink" target="blank" href={ movie.trailerLink }>
+				<img className="movie__poster"
+						 src={ location.pathname === '/movies' ? serverUrl + movie.image.url : movie.image } alt={ movie.nameRU }/>
+			</a>
+		
+		</li>
+	)
 }
 
 export default MoviesCard;

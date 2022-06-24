@@ -1,18 +1,14 @@
-import { Link } from 'react-router-dom';
-import './Logo.css';
-import logo from '../../images/icon_logo.svg';
+import React from "react";
+import "./Logo.css";
+import logo from "../../images/logo.svg";
+import { Link } from "react-router-dom";
 
 function Logo() {
-	return (
-		<Link to='/' className='app__link app__button'>
-			<img
-				className='logo'
-				src={logo}
-				alt='Логотип сайта'
-				title='На главную страницу'
-			/>
-		</Link>
-	);
+  return (
+    <Link className="logo-link" to="/">
+      <img className="logo-link__img" src={logo} alt="Логотип" />
+    </Link>
+  )
 }
 
 export default Logo;

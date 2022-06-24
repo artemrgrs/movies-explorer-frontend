@@ -1,50 +1,56 @@
-.filter {
-	display: flex;
-	align-items: center;
-	font-weight: 400;
-	font-size: 12px;
-	line-height: 18px;
-	cursor: pointer;
+.filter-checkbox {
+  justify-content: center;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  padding: 0 30px;
+  margin-top: 29px;
 }
 
-.filter__checkbox {
-	position: absolute;
-	clip: rect(0 0 0 0);
-	/* работает с абсолютно позиционированными элементами и отвечает за область (в данном случае прямоугольник), внутри которой будет показано содержимое этого элемента, нули - значит элемент не будет показан*/
-	width: 1px;
-	height: 1px;
-	/* если у элемента не будет размеров, некоторые браузеры посчитают, что его вообще нет */
-	overflow: hidden;
-	/* без этого свойства тоже сработает, но так наверняка, скрывает элементы, выходящие за границы родителя */
+.filter-checkbox__switch {
+  height: 20px;
+  width: 36px;
+  appearance: none;
+  border-radius: 20px;
+  box-shadow: inset -16px 0px 0px 0px #EBEBEB;
+  background-color: #F5F5F5;
+  border: 2px solid #EBEBEB;
+  outline: none;
+  transition: .15s;
 }
 
-.filter__pseudo-checkbox {
-	display: inline-block;
-	/* элемент span теперь сможет принимать определённую ширину и высоту */
-	vertical-align: middle;
-	/* элемент и текст будут правильно выровнены по вертикали. Работает в паре с inline-block */
-	width: 36px;
-	height: 20px;
-	margin-right: 12px;
+.filter-checkbox__switch:checked {
+  background-color: white;
+  box-shadow: inset 16px 0px 0px 0px #3DDC84;
+  border: 2px solid #3DDC84;
 }
 
-.filter__checkbox + .filter__pseudo-checkbox {
-	background-image: url(../../images/icon_tumbler-off.svg);
+.filter-checkbox__switch:focus {
+  outline-width: 0;
+  cursor: pointer;
 }
 
-.filter__checkbox:checked + .filter__pseudo-checkbox {
-	background-image: url(../../images/icon_tumbler-on.svg);
+.filter-checkbox__name {
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 18px;
+  margin-left: 15px;
 }
 
-/* .filter__checkbox:disabled + .filter__pseudo-checkbox {
-	background-image: url(../../images/icon_tumbler-disabled.svg);
-} */
 
-@media screen and (max-width: 320px) {
-	.filter {
-		font-size: 11px;
-	}
-	.filter__pseudo-checkbox {
-		margin-right: 13px;
-	}
+@media (max-width: 768px) {
+  .filter-checkbox  {
+    padding: 0 19px;
+  }
+}
+
+@media (max-width: 675px) {
+  .filter-checkbox {
+    border: none;
+    background: inherit;
+  }
+  .search__form {
+    border-radius: 9px;
+    background: #F9F9F9;
+  }
 }

@@ -1,9 +1,7 @@
-/* normalize.css */
 @import url(./vendor/normalize.css);
+@import url(./vendor/fonts/fonts.css);
 
-/* Шрифты */
-@import url(./vendor/fonts/inter.css);
-
-html {
-	scroll-behavior: smooth;
+.root {
+  background-color: #FFF;
+  min-height: 100vh;
 }

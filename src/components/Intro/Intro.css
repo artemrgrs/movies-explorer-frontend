@@ -1,0 +1,129 @@
+.intro {
+  display: flex;
+  justify-content: space-between;
+  margin: 0;
+  padding: 75px 70px 75px;
+  background-color: #5c5c5c;
+}
+
+.intro__text-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.intro__title {
+  max-width: 640px;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 50px;
+  line-height: 58px;
+  text-align: left;
+  color: #ffffff;
+  margin: 0;
+}
+
+.intro__subtitle {
+  margin-top: 36px;
+  max-width: 310px;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 13px;
+  line-height: 16px;
+  color: #ffffff;
+  text-align: left;
+  opacity: 0.5;
+}
+
+.intro__illustration {
+  width: 310px;
+  height: 304px;
+}
+
+.intro__learn-more {
+  text-align: center;
+  all: unset;
+  cursor: pointer;
+  width: 130px;
+  height: 36px;
+  color: #ffffff;
+  opacity: 0.6;
+  border: 1px solid #ffffff;
+  box-sizing: border-box;
+  border-radius: 3px;
+  margin-top: 134px;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
+}
+
+@media screen and (max-width: 768px) {
+  .intro {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 140px;
+  }
+
+  .intro__text-container {
+    order: 2;
+    align-items: center;
+  }
+
+  .intro__title {
+    margin-top: 48px;
+    text-align: center;
+    font-size: 40px;
+    line-height: 50px;
+  }
+
+  .intro__subtitle {
+    text-align: center;
+    font-size: 13px;
+    line-height: 16px;
+    margin-top: 22px;
+  }
+
+  .intro__illustration {
+    order: 1;
+  }
+
+  .intro__learn-more {
+    margin-top: 80px;
+    text-align: center;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .intro {
+    padding-top: 70px;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .intro__title {
+    margin-top: 44px;
+    font-size: 40px;
+    line-height: 38px;
+    max-width: 300px;
+    letter-spacing: -0.04em;
+  }
+
+  .intro__subtitle {
+    max-width: 260px;
+    margin-bottom: 0;
+  }
+
+  .intro__illustration {
+    width: 210px;
+    height: 206px;
+  }
+
+  .intro__learn-more {
+    margin-top: 80px;
+  }
+
+  .intro {
+    padding-bottom: 30px;
+  }
+}

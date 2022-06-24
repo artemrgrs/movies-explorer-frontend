@@ -1,164 +1,74 @@
-import React from 'react';
-import { useHistory } from 'react-router-dom';
-import './Profile.css';
-import { CurrentUserContext } from '../../contexts/CurrentUserContext';
-import { useFormValidation } from '../../utils/utils';
-import mainApi from '../../utils/MainApi';
-import {
-	formSubmitErrorText,
-	formSubmitSuccesText,
-} from '../../utils/constants';
+import React from "react";
+import "./Profile.css";
+import Header from "../Header/Header";
+import { Link } from "react-router-dom";
+import { CurrentUserContext } from "../context/CurrentUserContext";
+import { useFormWithValidation } from "../../utils/Validation";
+import Message from "../Message/Message";
 
-function Profile() {
-	const history = useHistory();
+function Profile({ isLoggedIn, onSignOut, onUpdateUser, message }) {
+  const currentUser = React.useContext(CurrentUserContext);
+  const { values, handleChange, errors, setValues, isValid, setIsValid } = useFormWithValidation();
 
-	const context = React.useContext(CurrentUserContext);
-	const {
-		setInitialMovies,
-		setIsLoggedIn,
-		currentUser,
-		setCurrentUser,
-		setMovies,
-		setMoviesInputValue,
-		setShortFilmsCheckboxValue,
-		formSubmitError,
-		setFormSubmitError,
-		setIsFirstSearchHappened,
-	} = context;
 
-	// Стейт сообщения пользователю об успешной отправке данных
-	const [formSubmitSucces, setFormSubmitSucces] = React.useState(null);
+  function handleSubmit(e) {
+    e.preventDefault();
+    const { name, email } = values;
+    onUpdateUser(name, email);
+  }
 
-	// Выход из профиля (меняем стейты, удаляем данные текущего пользователя из хранилища и редиректим на главную)
-	const handleProfileExit = (e) => {
-		setInitialMovies([]);
-		setMovies([]);
-		setMoviesInputValue('');
-		setShortFilmsCheckboxValue(false);
-		setIsFirstSearchHappened(false);
-		try {
-			localStorage.removeItem('token');
-			localStorage.removeItem('movies');
-			localStorage.removeItem('moviesInputValue');
-			localStorage.removeItem('shortFilmsCheckboxValue');
-		} catch (err) {
-			console.log(err);
-		}
-		setIsLoggedIn(false);
-		setCurrentUser({});
-		history.push('/');
-	};
+  React.useEffect(() => {
+    setValues(currentUser);
+    setIsValid(true);
+  }, [currentUser, setValues, setIsValid]);
 
-	// Набор переменных и функций для валидации формы ввода
-	const { values, errors, isValid, handleValuesChange, resetValidation } =
-		useFormValidation();
+  React.useEffect(() => {
+    if (values.name === currentUser.name && values.email === currentUser.email) {
+      setIsValid(false);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [values]);
 
-	// Заполняем инпуты значениями полей профиля при монтировании компонента
-	React.useEffect(() => {
-		resetValidation({
-			values: {
-				nameInput: currentUser.name,
-				emailInput: currentUser.email,
-			},
-		});
-	}, [currentUser.name, currentUser.email, resetValidation]);
+  const btnClassName = ((isValid && (values.name !== currentUser.name || values.email !== currentUser.email)) ? 'profile__btn profile__btn_activ' : 'profile__btn')
+  const btnDisabled = ((values.name === currentUser.name && values.email === currentUser.email) || !isValid);
 
-	// Очищаем стейты сообщений пользователю о результатах отправки данных
-	React.useEffect(() => {
-		setFormSubmitSucces(null);
-		setFormSubmitError(null);
-	}, [setFormSubmitError]);
-
-	// Обработчик отправки формы
-	const handleSubmit = (e) => {
-		e.preventDefault();
-		setFormSubmitSucces(null);
-		setFormSubmitError(null);
-		mainApi
-			.editProfile({ name: values.nameInput, email: values.emailInput })
-			.then((userData) => {
-				setCurrentUser({
-					...userData,
-					name: userData.name,
-					email: userData.email,
-				});
-				setFormSubmitSucces(formSubmitSuccesText);
-			})
-			.catch((err) => {
-				console.log(err);
-				// выводим ошибку отправки данных
-				setFormSubmitError(formSubmitErrorText);
-			});
-	};
-
-	return (
-		<form className='profile' name='user-profile-form' noValidate>
-			<h2 className='profile__title'>{currentUser.name}</h2>
-			<div className='profile__inputs-container'>
-				<div className='profile__input-wrapper'>
-					<label
-						className='profile__input-label'
-						htmlFor='profile-username-input'>
-						Имя
-					</label>
-					<input
-						className='profile__input'
-						type='text'
-						name='nameInput'
-						required
-						minLength='3'
-						maxLength='16'
-						value={values.nameInput || ''}
-						onChange={handleValuesChange}
-					/>
-					<span className={`profile__input-error profile__input-error_active`}>
-						{errors.nameInput}
-					</span>
-				</div>
-				<div className='profile__input-wrapper'>
-					<label className='profile__input-label' htmlFor='profile-email-input'>
-						Почта
-					</label>
-					<input
-						className='profile__input'
-						type='email'
-						name='emailInput'
-						required
-						value={values.emailInput || ''}
-						onChange={handleValuesChange}
-					/>
-					<span className={`profile__input-error profile__input-error_active`}>
-						{errors.emailInput}
-					</span>
-				</div>
-			</div>
-			<div className='profile__buttons-container'>
-				<span
-					className={`profile__submit-result${
-						formSubmitError || formSubmitSucces
-							? ' profile__submit-result_active'
-							: ''
-					}${formSubmitError ? ' profile__submit-result_type_error' : ''}`}>
-					{formSubmitError || formSubmitSucces}
-				</span>
-				<button
-					className={`app__link profile__button${
-						!isValid ? ' profile__button_inactive' : ''
-					}`}
-					type='submit'
-					onClick={handleSubmit}
-					disabled={!isValid ? true : false}>
-					Редактировать
-				</button>
-				<button
-					className='app__link profile__button'
-					type='button'
-					onClick={handleProfileExit}>
-					Выйти из аккаунта
-				</button>
-			</div>
-		</form>
-	);
+  return (
+    <>
+      <Header isLoggedIn={isLoggedIn} />
+      <div className="profile">
+        <h1 className="profile__title">Привет, {currentUser.name}!</h1>
+        <form className="profile__form" onSubmit={handleSubmit}>
+          <div className="profile__container">
+            <label className="profile__label" htmlFor="name">Имя</label>
+              <input className="profile__input"
+                type="text"
+                placeholder="Имя"
+                id="profile-name"
+                value={values.name || ''}
+                name="name"
+                onChange={handleChange}
+                required />
+            </div>
+            <span className="profile__input-error">{errors.name}</span>
+     
+          <div className="profile__container">
+            <label htmlFor="email" className="profile__label profile__label_not-line">E-mail</label>
+              <input className="profile__input"
+                type="email"
+                name="email"
+                placeholder="E-mail"
+                id="profile-email"
+                value={values.email || ''}
+                onChange={handleChange}
+                required />
+          </div>
+          <span className="profile__input-error">{errors.email}</span>
+          <Message message={message} />
+          <button className={btnClassName} disabled={btnDisabled} type="submit">Редактировать</button>
+        </form>
+        <Link to="/" className="profile__link" onClick={onSignOut}>Выйти из аккаунта</Link>
+      </div>
+    </>
+  )
 }
-
 export default Profile;

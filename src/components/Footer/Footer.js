@@ -1,36 +1,32 @@
-import React from 'react';
-import './Footer.css';
+import React from "react";
+import "./Footer.css";
 
 function Footer() {
-    return (
-        <footer className="footer">
-            <h2 className='footer__title'>
-                Учебный проект Яндекс.Практикум х BeatFilm.
-            </h2>
-            <div className='footer__container'>
-                <ul className='footer__links-list'>
-                    <li className='footer__links-item'>
-                        <a className='app__links footer__link' href='https://practicum.yandex.ru/' rel='noreferrer' target='_blank' title='https://practicum.yandex.ru/'>
-                            Яндекс.Практикум
-                        </a>
-                    </li>
-                    <li className='footer__links-item'>
-                        <a className='app__links footer__link' href='https://github.com/' rel='noreferrer' target='_blank' title='https://github.com/'>
-                            Github
-                        </a>
-                    </li>
-                    <li className='footer__links-item'>
-                        <a className='app__links footer__link' href='https://www.facebook.com/' rel='noreferrer' target='_blank' title='https://www.facebook.com/'>
-                            Facebook
-                        </a>
-                    </li>
-                </ul>
-                <span className='footer__copyright'>
-                    © 2022
-                </span>
-            </div>
-        </footer>
-    );
+  return (
+    <footer className="footer">
+      <h3 className="footer__title">Учебный проект Яндекс.Практикум х BeatFilm.</h3>
+      <div className="footer__container">
+        <p className="footer__copyright">&copy; 2022</p>
+        <ul className="footer__links">
+          <li>
+            <a className="footer__link" href="https://practicum.yandex.ru/" target="_blank" rel="noopener noreferrer">
+              Яндекс.Практикум
+            </a>
+          </li>
+          <li>
+            <a className="footer__link" href="https://github.com" target="_blank" rel="noopener noreferrer">
+              Github
+            </a>
+          </li>
+          <li>
+            <a className="footer__link" href="https://github.com/" target="_blank" rel="noopener noreferrer">
+              Facebook
+            </a>
+          </li>
+        </ul>
+      </div>
+    </footer>
+  )
 }
 
 export default Footer;

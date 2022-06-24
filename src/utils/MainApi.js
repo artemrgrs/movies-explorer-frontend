@@ -1,100 +1,137 @@
-import { mainApiConfig } from './constants';
+export const BASE_URL = 'https://api.artemrgrs2.nomoredomains.work';
 
-class MainApi {
-	constructor({ baseUrl, headers }) {
-		this._baseUrl = baseUrl;
-		this._headers = headers;
-	}
-	// Проверка ответа сервера
-	_checkResponse(res) {
-		if (res.ok) {
-			return res.json();
-		} else {
-			return Promise.reject(`Ошибка: ${res.status}`);
-		}
-	}
+const checkResult = (res) => {
 
-	// Регистрация (создание) пользователя (в ответе должны быть name, email, _id)
-	register(name, email, password) {
-		return fetch(`${this._baseUrl}signup`, {
-			method: 'POST',
-			headers: this._headers,
-			body: JSON.stringify({
-				name: name,
-				email: email,
-				password: password,
-			}),
-		}).then(this._checkResponse);
-	}
+  return res.json()
+    .then((res2) => {
+      if (res.ok) {
+        return new Promise((resolve, reject) => { resolve(res2)})
+      }
+      return Promise.reject(res2.message)
+    })
+};
 
-	// Авторизация пользователя (в ответе должен быть токен)
-	login(email, password) {
-		return fetch(`${this._baseUrl}signin`, {
-			method: 'POST',
-			headers: this._headers,
-			body: JSON.stringify({ password, email }),
-		}).then(this._checkResponse);
-	}
+export const register = (name, email, password) => {
+  return fetch(`${BASE_URL}/signup`, {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ "name": name, "email": email, "password": password })
+  })
+    .then(checkResult)
+    .then((data) => {
+      localStorage.setItem('token', data.token);
+      return data;
+    })
+};
 
-	// Установка токена в заголовки
-	setTokenHeaders(token) {
-		this._headers = {
-			...this._headers,
-			Authorization: token,
-			// Authorization: `Bearer ${token}`,--- если Bearer дбавлять здесь, то и на бэке нужно уго убирать при проверке
-		};
-	}
+export const authorize = (email, password) => {
+  return fetch(`${BASE_URL}/signin`, {
+    method: "POST",
+    credentials: 'include',
+    headers: {
+      "Accept": "application/json",
+      "Content-Type": "application/json",
+      'Authorization': `Bearer ${localStorage.getItem('token')}`,
+    },
+    body: JSON.stringify({ "email": email, "password": password })
+  })
+    .then(checkResult)
+    .then((data) => {
+      localStorage.setItem('token', data.token);
+      return data;
+    })
+};
 
-	// Проверка токена (получение данных текущего пользователя, (в ответе должны быть name, email, _id))
-	checkToken(token) {
-		return fetch(`${this._baseUrl}users/me`, {
-			method: 'GET',
-			headers: {
-				...this._headers,
-				// Authorization: `Bearer ${token}`,
-				Authorization: token,
-			},
-		}).then(this._checkResponse);
-	}
+export const checkToken = (token) => {
+  return fetch(`${BASE_URL}/users/me`, {
+    method: "GET",
+    credentials: 'include',
+    headers: {
+      "Content-Type": "application/json",
+      'Authorization': `Bearer ${localStorage.getItem('token')}`,
+    },
+  })
+    .then(checkResult);
+};
 
-	// Редактирование профиля пользователя (в ответе должны быть name, email, _id)
-	editProfile({ name, email }) {
-		return fetch(`${this._baseUrl}users/me`, {
-			method: 'PATCH',
-			headers: this._headers,
-			body: JSON.stringify({
-				name: name,
-				email: email,
-			}),
-		}).then(this._checkResponse);
-	}
-
-	// Получение массива сохраненных карточек
-	getCards() {
-		return fetch(`${this._baseUrl}movies`, {
-			method: 'GET',
-			headers: this._headers,
-		}).then(this._checkResponse);
-	}
-
-	// Создание карточки
-	createCard(card) {
-		return fetch(`${this._baseUrl}movies`, {
-			method: 'POST',
-			headers: this._headers,
-			body: JSON.stringify(card),
-		}).then(this._checkResponse);
-	}
-
-	// Удаление карточки
-	deleteCard(cardId) {
-		return fetch(`${this._baseUrl}movies/${cardId}`, {
-			method: 'DELETE',
-			headers: this._headers,
-		}).then(this._checkResponse);
-	}
+export const getUserData = () => {
+  return fetch(`${BASE_URL}/users/me`, {
+    method: 'GET',
+    credentials: 'include',
+    headers: {
+      "Content-Type": "application/json",
+      'Authorization': `Bearer ${localStorage.getItem('token')}`,
+    },
+  })
+    .then(checkResult)
 }
 
-const mainApi = new MainApi(mainApiConfig);
+export const setUserProfile = (name, email) => {
+  return fetch(`${BASE_URL}/users/me`, {
+    method: 'PATCH',
+    credentials: 'include',
+    headers: {
+      "Accept": "application/json",
+      "Content-Type": "application/json",
+      'Authorization': `Bearer ${localStorage.getItem('token')}`,
+    },
+    body: JSON.stringify({
+      name: name,
+      email: email,
+    })
+  })
+    .then(checkResult)
+}
 
-export default mainApi;
+export const getMovies = () => {
+  return fetch(`${BASE_URL}/movies`, {
+    method: 'GET',
+    credentials: 'include',
+    headers: {
+      "Content-Type": "application/json",
+      'Authorization': `Bearer ${localStorage.getItem('token')}`,
+    },
+  })
+    .then(checkResult)
+}
+
+export const saveMovie = (movie) => {
+  return fetch(`${BASE_URL}/movies`, {
+    method: "POST",
+    credentials: 'include',
+    headers: {
+      "Accept": "application/json",
+      "Content-Type": "application/json",
+      'Authorization': `Bearer ${localStorage.getItem('token')}`,
+    },
+    body: JSON.stringify({
+      country: movie.country || ' ',
+      director: movie.director || ' ',
+      duration: movie.duration || ' ',
+      year: movie.year || ' ',
+      description: movie.description || ' ',
+      image: movie.image || ' ',
+      trailer: movie.trailer || ' ',
+      thumbnail: movie.thumbnail || ' ',
+      nameRU: movie.nameRU || ' ',
+      nameEN: movie.nameEN || ' ',
+      movieId: movie.movieId || ' ',
+    })
+  })
+    .then(checkResult)
+};
+
+export const deleteMovie = (movieId) => {
+  return fetch(`${BASE_URL}/movies/${movieId}`, {
+    method: 'DELETE',
+    credentials: 'include',
+    headers: {
+      "Content-Type": "application/json",
+      'Authorization': `Bearer ${localStorage.getItem('token')}`,
+    },
+  })
+    .then(checkResult)
+}
